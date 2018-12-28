@@ -1,5 +1,4 @@
 import org.gradle.api.tasks.bundling.Jar
-import org.jetbrains.dokka.DokkaConfiguration
 import org.jetbrains.dokka.gradle.DokkaTask
 
 group = "org.litote"
@@ -34,9 +33,6 @@ apply {
 tasks.withType<DokkaTask> {
     outputFormat = "html"
     outputDirectory = "$buildDir/docs/kdoc"
-    externalDocumentationLink(delegateClosureOf<DokkaConfiguration.ExternalDocumentationLink.Builder> {
-        url = uri("https://docs.spring.io/spring-framework/docs/5.1.0.BUILD-SNAPSHOT/javadoc-api/").toURL()
-    })
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
@@ -45,7 +41,7 @@ val sourcesJar by tasks.registering(Jar::class) {
 }
 
 val javadocJar by tasks.registering(Jar::class) {
-    dependsOn(tasks.withType<DokkaTask>() )
+    dependsOn(tasks.withType<DokkaTask>())
     classifier = "javadoc"
     from("$buildDir/docs/kdoc")
 }
